@@ -3,75 +3,110 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/background_app"
     tools:context=".activities.AgregarPersonaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center"
+        android:padding="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/agregar_persona_activity_title"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
+            android:textColor="@color/text_secondary"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="32dp"/>
 
         <EditText
             android:id="@+id/etNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
             android:hint="@string/hint_name"
-            android:inputType="textPersonName|textCapWords" />
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="textPersonName|textCapWords"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/etEdad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_input"
             android:hint="@string/hint_age"
-            android:inputType="number" />
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
 
-        <EditText
-            android:id="@+id/etOrganizacion"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_organization"
-            android:inputType="text" />
+            android:text="@string/hint_organization"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"/>
 
-        <EditText
-            android:id="@+id/etAsistencias"
+        <Spinner
+            android:id="@+id/spOrganizacion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_attendance"
-            android:inputType="number" />
+            android:text="@string/hint_attendance"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"/>
+
+        <Spinner
+            android:id="@+id/spAsistencias"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/etTiempoEnsenando"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_input"
             android:hint="@string/hint_teaching_time"
-            android:inputType="number" />
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="number"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/etDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_input"
             android:hint="@string/hint_address"
-            android:inputType="textPostalAddress" />
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="textPostalAddress"
+            android:layout_marginBottom="16dp"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGuardarPersona"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/button_text_color"
+            android:textSize="16sp"
+            android:textAllCaps="false"
             android:padding="16dp"
             android:text="@string/button_save_person" />
 

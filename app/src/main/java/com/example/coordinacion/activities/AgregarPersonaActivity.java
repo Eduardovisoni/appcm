@@ -2,8 +2,10 @@ package com.example.coordinacion.activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,9 +14,14 @@ import com.example.coordinacion.database.AppDatabase;
 import com.example.coordinacion.database.Persona;
 import com.example.coordinacion.database.PersonaDao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class AgregarPersonaActivity extends AppCompatActivity {
 
-    private EditText etNombre, etEdad, etOrganizacion, etAsistencias, etTiempoEnsenando, etDireccion;
+    private EditText etNombre, etEdad, etTiempoEnsenando, etDireccion;
+    private Spinner spOrganizacion, spAsistencias;
     private Button btnGuardarPersona;
 
     private String grupoSeleccionado;
@@ -28,10 +35,8 @@ public class AgregarPersonaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_persona);
         setTitle(R.string.agregar_persona_activity_title);
 
-        // 1. Obtener la instancia del DAO de Room
         personaDao = AppDatabase.getDatabase(getApplicationContext()).personaDao();
 
-        // 2. Recuperar los datos pasados desde la actividad anterior
         grupoSeleccionado = getIntent().getStringExtra(getString(R.string.intent_key_group));
         categoriaSeleccionada = getIntent().getStringExtra(getString(R.string.intent_key_category));
 
@@ -41,55 +46,89 @@ public class AgregarPersonaActivity extends AppCompatActivity {
             return;
         }
 
-        // 3. Vincular las vistas del layout
         etNombre = findViewById(R.id.etNombre);
         etEdad = findViewById(R.id.etEdad);
-        etOrganizacion = findViewById(R.id.etOrganizacion);
-        etAsistencias = findViewById(R.id.etAsistencias);
         etTiempoEnsenando = findViewById(R.id.etTiempoEnsenando);
         etDireccion = findViewById(R.id.etDireccion);
+        
+        // Nuevos Spinners
+        spOrganizacion = findViewById(R.id.spOrganizacion);
+        spAsistencias = findViewById(R.id.spAsistencias);
+        
         btnGuardarPersona = findViewById(R.id.btnGuardarPersona);
 
-        // 4. Configurar el listener para el botón de guardar
+        configurarSpinners();
+
         btnGuardarPersona.setOnClickListener(v -> guardarPersona());
     }
 
+    private void configurarSpinners() {
+        // Configurar Spinner de Organización
+        List<String> organizaciones = Arrays.asList(
+                "Ninguna",
+                "Primaria",
+                "Hombres Jóvenes",
+                "Mujeres Jóvenes",
+                "Sociedad de Socorro",
+                "Cuórum de Élderes",
+                "Escuela Dominical"
+        );
+        ArrayAdapter<String> orgAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, organizaciones);
+        // Usamos nuestro layout personalizado para la lista desplegable también
+        orgAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spOrganizacion.setAdapter(orgAdapter);
+
+        // Configurar Spinner de Asistencias
+        List<String> asistencias = new ArrayList<>();
+        for (int i = 0; i <= 10; i++) {
+            asistencias.add(String.valueOf(i));
+        }
+        asistencias.add("+10");
+
+        ArrayAdapter<String> asistAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, asistencias);
+        // Usamos nuestro layout personalizado para la lista desplegable también
+        asistAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spAsistencias.setAdapter(asistAdapter);
+    }
+
     private void guardarPersona() {
-        // 5. Obtener los textos de los campos de entrada
         String nombre = etNombre.getText().toString().trim();
         String edadStr = etEdad.getText().toString().trim();
-        String organizacion = etOrganizacion.getText().toString().trim();
-        String asistenciasStr = etAsistencias.getText().toString().trim();
         String tiempoEnsenandoStr = etTiempoEnsenando.getText().toString().trim();
         String direccion = etDireccion.getText().toString().trim();
 
-        // 6. Validar que el nombre no esté vacío
+        // Obtener valores de los Spinners
+        String organizacion = spOrganizacion.getSelectedItem().toString();
+        String asistenciasStr = spAsistencias.getSelectedItem().toString();
+
         if (TextUtils.isEmpty(nombre)) {
             etNombre.setError(getString(R.string.error_empty_field));
             etNombre.requestFocus();
             return;
         }
 
-        // 7. Validar que la persona no exista ya en el mismo grupo
         Persona existente = personaDao.buscarPorNombreYGrupo(nombre, grupoSeleccionado);
         if (existente != null) {
             Toast.makeText(this, R.string.error_person_exists, Toast.LENGTH_LONG).show();
             return;
         }
 
-        // 8. Convertir los campos numéricos, manejando valores vacíos
         int edad = TextUtils.isEmpty(edadStr) ? 0 : Integer.parseInt(edadStr);
-        int asistencias = TextUtils.isEmpty(asistenciasStr) ? 0 : Integer.parseInt(asistenciasStr);
         int tiempoEnsenando = TextUtils.isEmpty(tiempoEnsenandoStr) ? 0 : Integer.parseInt(tiempoEnsenandoStr);
+        
+        // Convertir asistencias a entero. Si es "+10", guardamos 11 (u otro valor lógico)
+        int asistencias = 0;
+        if (asistenciasStr.equals("+10")) {
+            asistencias = 11; 
+        } else {
+            asistencias = Integer.parseInt(asistenciasStr);
+        }
 
-        // 9. Crear el objeto Persona
         Persona nuevaPersona = new Persona(nombre, edad, categoriaSeleccionada, organizacion, asistencias, tiempoEnsenando, direccion, grupoSeleccionado);
 
-        // 10. Insertar en la base de datos
         personaDao.insert(nuevaPersona);
 
-        // 11. Notificar al usuario y cerrar la actividad
         Toast.makeText(this, R.string.person_saved_successfully, Toast.LENGTH_SHORT).show();
-        finish(); // Regresa a la pantalla anterior
+        finish(); 
     }
 }

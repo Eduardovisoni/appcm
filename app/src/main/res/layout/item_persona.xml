@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    android:layout_marginBottom="8dp"
-    android:background="@android:drawable/dialog_holo_light_frame">
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_input">
 
     <TextView
         android:id="@+id/tvPersonaNombre"
@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:text="Nombre de la Persona"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/button_color" />
 
     <TextView
         android:id="@+id/tvPersonaCategoria"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Categoría"
         android:textSize="14sp"
+        android:textColor="@color/text_secondary"
         android:layout_marginTop="4dp"/>
 
     <TextView
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="Edad: 30, Asistencias: 5"
         android:textSize="14sp"
+        android:textColor="@color/text_secondary"
         android:layout_marginTop="4dp"/>
 
 </LinearLayout>

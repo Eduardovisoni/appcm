@@ -4,40 +4,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="16dp"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@color/background_app"
     tools:context=".activities.MenuPrincipalActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddPerson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_add_person"
-        android:layout_marginTop="20dp"
-        android:padding="12dp"/>
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewPeople"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_saved_people"
-        android:layout_marginTop="20dp"
-        android:padding="12dp"/>
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDeleteRecords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_delete_records"
-        android:layout_marginTop="20dp"
-        android:padding="12dp"/>
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnExportCsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_export_csv"
-        android:layout_marginTop="20dp"
-        android:padding="12dp"/>
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
 
 </LinearLayout>

@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Paleta Minimalista -->
+    <color name="background_dark">#06141B</color>
+    <color name="background_app">#11212D</color>
+    <color name="input_background">#253745</color>
+    <color name="text_hint">#4A5C6A</color>
+    <color name="text_secondary">#9BA8AB</color>
+    <color name="button_color">#CCD0CF</color>
+    <color name="button_text_color">#06141B</color>
 </resources>

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
+    android:padding="24dp"
+    android:background="@color/background_app"
     tools:context=".activities.MainActivity">
 
     <TextView
@@ -13,25 +14,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_activity_title"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="48dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnElderes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_elders"
-        android:padding="16dp"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
         android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:padding="16dp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="24dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSisters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_sisters"
-        android:padding="16dp"
-        android:textSize="18sp"/>
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:padding="16dp"/>
 
 </LinearLayout>
