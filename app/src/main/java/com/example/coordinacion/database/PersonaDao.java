@@ -1,0 +1,24 @@
+package com.example.coordinacion.database;
+
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+import java.util.List;
+
+@Dao
+public interface PersonaDao {
+    @Insert
+    void insert(Persona persona);
+
+    // Obtener personas filtradas por grupo
+    @Query("SELECT * FROM personas WHERE grupo = :grupo")
+    List<Persona> getPersonasPorGrupo(String grupo);
+
+    // Verificar si existe una persona por nombre y grupo (para validación)
+    @Query("SELECT * FROM personas WHERE nombre = :nombre AND grupo = :grupo LIMIT 1")
+    Persona buscarPorNombreYGrupo(String nombre, String grupo);
+
+    // Eliminar solo registros del grupo actual
+    @Query("DELETE FROM personas WHERE grupo = :grupo")
+    void eliminarPorGrupo(String grupo);
+}

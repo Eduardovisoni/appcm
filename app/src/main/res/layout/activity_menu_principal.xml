@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    tools:context=".activities.MenuPrincipalActivity">
+
+    <Button
+        android:id="@+id/btnAddPerson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_add_person"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"/>
+
+    <Button
+        android:id="@+id/btnViewPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_saved_people"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"/>
+
+    <Button
+        android:id="@+id/btnDeleteRecords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_delete_records"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"/>
+
+    <Button
+        android:id="@+id/btnExportCsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_export_csv"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"/>
+
+</LinearLayout>
