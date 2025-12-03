@@ -1,24 +1,23 @@
 package com.example.coordinacion.activities;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.example.coordinacion.R;
 import com.example.coordinacion.database.AppDatabase;
 import com.example.coordinacion.database.Persona;
 import com.example.coordinacion.database.PersonaDao;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuPrincipalActivity extends AppCompatActivity {
@@ -32,9 +31,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principal);
         setTitle(R.string.menu_principal_activity_title);
 
-        // Inicializar DAO
         personaDao = AppDatabase.getDatabase(getApplicationContext()).personaDao();
-
         grupoSeleccionado = getIntent().getStringExtra(getString(R.string.intent_key_group));
 
         if (grupoSeleccionado == null || grupoSeleccionado.isEmpty()) {
@@ -44,6 +41,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             return;
         }
 
+        // ... (resto de los listeners de botones)
         Button btnAddPerson = findViewById(R.id.btnAddPerson);
         Button btnViewPeople = findViewById(R.id.btnViewPeople);
         Button btnDeleteRecords = findViewById(R.id.btnDeleteRecords);
@@ -52,7 +50,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         btnAddPerson.setOnClickListener(v -> {
             Intent intent = new Intent(this, SeleccionarCategoriaActivity.class);
             intent.putExtra(getString(R.string.intent_key_group), grupoSeleccionado);
-            startActivity(intent); 
+            startActivity(intent);
         });
 
         btnViewPeople.setOnClickListener(v -> {
@@ -68,62 +66,94 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
 
         btnExportCsv.setOnClickListener(v -> {
-            exportarCSV();
+            exportarYCompartirReporteHTML();
         });
     }
 
-    private void exportarCSV() {
-        List<Persona> personas = personaDao.getPersonasPorGrupo(grupoSeleccionado);
+    private void exportarYCompartirReporteHTML() {
+        List<Persona> todasLasPersonas = personaDao.getPersonasPorGrupo(grupoSeleccionado);
 
-        if (personas.isEmpty()) {
+        if (todasLasPersonas.isEmpty()) {
             Toast.makeText(this, "No hay datos para exportar en este grupo.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        StringBuilder csvData = new StringBuilder();
-        csvData.append("id,nombre,edad,categoria,organizacion,asistencias,tiempoEnsenando,direccion,grupo\n");
+        StringBuilder html = new StringBuilder();
+        html.append("<html><head><meta charset=\"UTF-8\"><style>");
+        
+        // ESTILOS CSS ACTUALIZADOS PARA CENTRAR
+        html.append("body { font-family: Arial, sans-serif; }");
+        html.append("h1 { text-align: center; margin-bottom: 20px; }"); // Título centrado
+        html.append("table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }");
+        // text-align: center en th y td para centrar el contenido de la tabla
+        html.append("th, td { border: 1px solid #000; padding: 8px; text-align: center; vertical-align: middle; }"); 
+        html.append(".category-header { background-color: #4A5C6A; color: white; text-align: center; font-size: 18px; font-weight: bold; }");
+        html.append(".column-header { background-color: #f2f2f2; font-weight: bold; }");
+        
+        html.append("</style></head><body>");
+        html.append("<h1>Reporte de ").append(grupoSeleccionado).append("</h1>");
 
-        for (Persona p : personas) {
-            csvData.append(p.id).append(",");
-            csvData.append(p.nombre).append(",");
-            csvData.append(p.edad).append(",");
-            csvData.append(p.categoria).append(",");
-            csvData.append(p.organizacion).append(",");
-            csvData.append(p.asistencias).append(",");
-            csvData.append(p.tiempoEnsenando).append(",");
-            csvData.append(p.direccion).append(",");
-            csvData.append(p.grupo).append("\n");
-        }
+        String[] categorias = { getString(R.string.category_friend), getString(R.string.category_new_convert), getString(R.string.category_inactive_member), getString(R.string.category_member) };
 
-        try {
-            guardarArchivoCSV(csvData.toString());
-            Toast.makeText(this, R.string.export_success, Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            Log.e("ExportCSV", "Error al guardar el archivo", e);
-            Toast.makeText(this, R.string.export_failure, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void guardarArchivoCSV(String content) throws IOException {
-        String fileName = "coordinacion_" + grupoSeleccionado + "_" + System.currentTimeMillis() + ".csv";
-
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-        values.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
-        }
-
-        Uri uri = getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);
-
-        if (uri != null) {
-            try (OutputStream outputStream = getContentResolver().openOutputStream(uri)) {
-                if (outputStream != null) {
-                    outputStream.write(content.getBytes());
+        for (String categoria : categorias) {
+            List<Persona> personasCategoria = new ArrayList<>();
+            for (Persona p : todasLasPersonas) {
+                if (p.categoria != null && p.categoria.equals(categoria)) {
+                    personasCategoria.add(p);
                 }
             }
-        } else {
-            throw new IOException("No se pudo crear el archivo en MediaStore");
+            if (!personasCategoria.isEmpty()) {
+                // Aumentamos el colspan a 7 porque agregamos la columna de Notas
+                html.append("<table><tr><td colspan='7' class='category-header'>").append(categoria).append("</td></tr>");
+                
+                // Agregamos el encabezado de Notas
+                html.append("<tr class='column-header'><th>Nombre</th><th>Edad</th><th>Organización</th><th>Asistencias</th><th>Tiempo Ens.</th><th>Dirección</th><th>Notas</th></tr>");
+                
+                for (Persona p : personasCategoria) {
+                    String notaTexto = (p.notas != null) ? p.notas : ""; // Manejo de nulos
+                    html.append("<tr>")
+                        .append("<td>").append(p.nombre).append("</td>")
+                        .append("<td>").append(p.edad).append("</td>")
+                        .append("<td>").append(p.organizacion).append("</td>")
+                        .append("<td>").append(p.asistencias).append("</td>")
+                        .append("<td>").append(p.tiempoEnsenando).append("</td>")
+                        .append("<td>").append(p.direccion).append("</td>")
+                        .append("<td>").append(notaTexto).append("</td>") // Agregamos el dato de la nota
+                        .append("</tr>");
+                }
+                html.append("</table><br>");
+            }
+        }
+        html.append("</body></html>");
+
+        try {
+            // 1. Guardar el archivo en el directorio de caché de la app
+            File cachePath = new File(getCacheDir(), "files");
+            cachePath.mkdirs(); 
+            File file = new File(cachePath, "Reporte_" + grupoSeleccionado + ".html");
+            FileOutputStream stream = new FileOutputStream(file);
+            stream.write(html.toString().getBytes());
+            stream.close();
+
+            // 2. Obtener la URI segura usando el FileProvider
+            Uri contentUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
+
+            if (contentUri != null) {
+                // 3. Crear el Intent para compartir
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); 
+                shareIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
+                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Reporte de " + grupoSeleccionado);
+
+                // 4. Lanzar el menú de compartir
+                startActivity(Intent.createChooser(shareIntent, "Compartir reporte vía..."));
+            }
+
+        } catch (IOException e) {
+            Log.e("ShareHTML", "Error al crear o compartir el archivo HTML", e);
+            Toast.makeText(this, "Error al compartir el archivo.", Toast.LENGTH_LONG).show();
         }
     }
 }

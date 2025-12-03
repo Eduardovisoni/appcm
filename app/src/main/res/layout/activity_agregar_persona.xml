@@ -98,6 +98,19 @@
             android:inputType="textPostalAddress"
             android:layout_marginBottom="16dp"/>
 
+        <EditText
+            android:id="@+id/etNotas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_notes"
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top|start"
+            android:layout_marginBottom="16dp"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGuardarPersona"
             android:layout_width="match_parent"

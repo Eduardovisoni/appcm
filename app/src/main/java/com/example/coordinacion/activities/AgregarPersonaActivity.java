@@ -1,7 +1,9 @@
 package com.example.coordinacion.activities;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class AgregarPersonaActivity extends AppCompatActivity {
 
-    private EditText etNombre, etEdad, etTiempoEnsenando, etDireccion;
+    private EditText etNombre, etEdad, etTiempoEnsenando, etDireccion, etNotas; // Agregado etNotas
     private Spinner spOrganizacion, spAsistencias;
     private Button btnGuardarPersona;
 
@@ -50,31 +52,30 @@ public class AgregarPersonaActivity extends AppCompatActivity {
         etEdad = findViewById(R.id.etEdad);
         etTiempoEnsenando = findViewById(R.id.etTiempoEnsenando);
         etDireccion = findViewById(R.id.etDireccion);
+        etNotas = findViewById(R.id.etNotas); // Inicializar campo de notas
         
-        // Nuevos Spinners
         spOrganizacion = findViewById(R.id.spOrganizacion);
         spAsistencias = findViewById(R.id.spAsistencias);
         
         btnGuardarPersona = findViewById(R.id.btnGuardarPersona);
 
         configurarSpinners();
+        configurarLogicaEdadOrganizacion();
 
         btnGuardarPersona.setOnClickListener(v -> guardarPersona());
     }
 
     private void configurarSpinners() {
-        // Configurar Spinner de Organización
+        // Lista de organizaciones actualizada (sin Escuela Dominical)
         List<String> organizaciones = Arrays.asList(
                 "Ninguna",
                 "Primaria",
                 "Hombres Jóvenes",
                 "Mujeres Jóvenes",
                 "Sociedad de Socorro",
-                "Cuórum de Élderes",
-                "Escuela Dominical"
+                "Cuórum de Élderes"
         );
         ArrayAdapter<String> orgAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, organizaciones);
-        // Usamos nuestro layout personalizado para la lista desplegable también
         orgAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spOrganizacion.setAdapter(orgAdapter);
 
@@ -86,9 +87,63 @@ public class AgregarPersonaActivity extends AppCompatActivity {
         asistencias.add("+10");
 
         ArrayAdapter<String> asistAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, asistencias);
-        // Usamos nuestro layout personalizado para la lista desplegable también
         asistAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spAsistencias.setAdapter(asistAdapter);
+    }
+
+    private void configurarLogicaEdadOrganizacion() {
+        etEdad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    seleccionarOrganizacion("Ninguna");
+                    return;
+                }
+
+                try {
+                    int edad = Integer.parseInt(s.toString());
+                    String organizacionSugerida;
+
+                    if (edad >= 0 && edad <= 11) {
+                        organizacionSugerida = "Primaria";
+                    } else if (edad >= 12 && edad <= 17) {
+                        // Distinguir entre Hombres y Mujeres Jóvenes
+                        if (grupoSeleccionado.equals(getString(R.string.group_elders))) {
+                            organizacionSugerida = "Hombres Jóvenes";
+                        } else {
+                            organizacionSugerida = "Mujeres Jóvenes";
+                        }
+                    } else if (edad >= 18) {
+                        // Distinguir entre Élderes y Sociedad de Socorro
+                        if (grupoSeleccionado.equals(getString(R.string.group_elders))) {
+                            organizacionSugerida = "Cuórum de Élderes";
+                        } else {
+                            organizacionSugerida = "Sociedad de Socorro";
+                        }
+                    } else {
+                        organizacionSugerida = "Ninguna";
+                    }
+                    seleccionarOrganizacion(organizacionSugerida);
+                } catch (NumberFormatException e) {
+                    // Si el texto no es un número válido, no hacer nada o seleccionar "Ninguna"
+                    seleccionarOrganizacion("Ninguna");
+                }
+            }
+        });
+    }
+
+    private void seleccionarOrganizacion(String organizacion) {
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spOrganizacion.getAdapter();
+        int posicion = adapter.getPosition(organizacion);
+        if (posicion >= 0) {
+            spOrganizacion.setSelection(posicion);
+        }
     }
 
     private void guardarPersona() {
@@ -96,8 +151,8 @@ public class AgregarPersonaActivity extends AppCompatActivity {
         String edadStr = etEdad.getText().toString().trim();
         String tiempoEnsenandoStr = etTiempoEnsenando.getText().toString().trim();
         String direccion = etDireccion.getText().toString().trim();
+        String notas = etNotas.getText().toString().trim(); // Obtener texto de notas
 
-        // Obtener valores de los Spinners
         String organizacion = spOrganizacion.getSelectedItem().toString();
         String asistenciasStr = spAsistencias.getSelectedItem().toString();
 
@@ -116,7 +171,6 @@ public class AgregarPersonaActivity extends AppCompatActivity {
         int edad = TextUtils.isEmpty(edadStr) ? 0 : Integer.parseInt(edadStr);
         int tiempoEnsenando = TextUtils.isEmpty(tiempoEnsenandoStr) ? 0 : Integer.parseInt(tiempoEnsenandoStr);
         
-        // Convertir asistencias a entero. Si es "+10", guardamos 11 (u otro valor lógico)
         int asistencias = 0;
         if (asistenciasStr.equals("+10")) {
             asistencias = 11; 
@@ -124,7 +178,8 @@ public class AgregarPersonaActivity extends AppCompatActivity {
             asistencias = Integer.parseInt(asistenciasStr);
         }
 
-        Persona nuevaPersona = new Persona(nombre, edad, categoriaSeleccionada, organizacion, asistencias, tiempoEnsenando, direccion, grupoSeleccionado);
+        // Guardar con el nuevo campo de notas
+        Persona nuevaPersona = new Persona(nombre, edad, categoriaSeleccionada, organizacion, asistencias, tiempoEnsenando, direccion, grupoSeleccionado, notas);
 
         personaDao.insert(nuevaPersona);
 

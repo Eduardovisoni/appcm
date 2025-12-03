@@ -24,10 +24,11 @@
     <string name="agregar_persona_activity_title">Agregar Nueva Persona</string>
     <string name="hint_name">Nombre completo</string>
     <string name="hint_age">Edad</string>
-    <string name="hint_organization">Organización (Primaria, Hombres/Mujeres Jóvenes, etc.)</string>
-    <string name="hint_attendance">Asistencias a la Iglesia</string>
+    <string name="hint_organization">Organización</string>
+    <string name="hint_attendance">Asistencias</string>
     <string name="hint_teaching_time">Tiempo enseñando (Semanas)</string>
     <string name="hint_address">Dirección</string>
+    <string name="hint_notes">Notas adicionales</string>
     <string name="button_save_person">Guardar Persona</string>
     <string name="error_empty_field">Este campo no puede estar vacío</string>
     <string name="error_person_exists">Ya existe una persona con este nombre en el grupo seleccionado.</string>
@@ -43,8 +44,8 @@
     <string name="records_deleted_successfully">Registros eliminados exitosamente.</string>
 
     <!-- Exportar CSV -->
-    <string name="export_success">CSV exportado exitosamente en la carpeta de Descargas.</string>
-    <string name="export_failure">Error al exportar el archivo CSV.</string>
+    <string name="export_success">Reporte exportado exitosamente.</string>
+    <string name="export_failure">Error al exportar el archivo.</string>
     <string name="permission_denied">Permiso de almacenamiento denegado.</string>
 
     <!-- General -->

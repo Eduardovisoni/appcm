@@ -10,14 +10,16 @@ public class Persona {
 
     public String nombre;
     public int edad;
-    public String categoria; // Amigo, Recién Converso, etc.
+    public String categoria; 
     public String organizacion;
     public int asistencias;
     public int tiempoEnsenando;
     public String direccion;
-    public String grupo; // Elderes o Hermanas
+    public String grupo; 
+    public String notas; // Nuevo campo
 
-    public Persona(String nombre, int edad, String categoria, String organizacion, int asistencias, int tiempoEnsenando, String direccion, String grupo) {
+    // Constructor actualizado
+    public Persona(String nombre, int edad, String categoria, String organizacion, int asistencias, int tiempoEnsenando, String direccion, String grupo, String notas) {
         this.nombre = nombre;
         this.edad = edad;
         this.categoria = categoria;
@@ -26,5 +28,6 @@ public class Persona {
         this.tiempoEnsenando = tiempoEnsenando;
         this.direccion = direccion;
         this.grupo = grupo;
+        this.notas = notas;
     }
 }

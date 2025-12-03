@@ -1,6 +1,8 @@
 package com.example.coordinacion.activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ListaPersonasActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private TextView tvEmptyState; // Referencia al texto de "No hay datos"
     private PersonaAdapter adapter;
     private PersonaDao personaDao;
     private String grupoSeleccionado;
@@ -35,8 +38,10 @@ public class ListaPersonasActivity extends AppCompatActivity {
             return;
         }
 
-        // Inicializar RecyclerView
+        // Inicializar Vistas
         recyclerView = findViewById(R.id.recyclerViewPersonas);
+        tvEmptyState = findViewById(R.id.tvEmptyState);
+        
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Inicializar Base de Datos
@@ -49,9 +54,18 @@ public class ListaPersonasActivity extends AppCompatActivity {
     private void cargarPersonas() {
         // Obtener lista filtrada por grupo
         List<Persona> listaPersonas = personaDao.getPersonasPorGrupo(grupoSeleccionado);
-        
-        // Configurar Adapter
-        adapter = new PersonaAdapter(listaPersonas);
-        recyclerView.setAdapter(adapter);
+
+        // Lógica para mostrar mensaje si está vacío
+        if (listaPersonas.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            tvEmptyState.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            tvEmptyState.setVisibility(View.GONE);
+            
+            // Configurar Adapter solo si hay datos
+            adapter = new PersonaAdapter(listaPersonas);
+            recyclerView.setAdapter(adapter);
+        }
     }
 }
