@@ -54,7 +54,7 @@
             android:exported="false"
             android:label="@string/eliminar_registros_activity_title"/>
 
-        <!-- AgregarPersonaActivity se creará en el siguiente paso, pero la registro de una vez para evitar conflictos luego -->
+        <!-- AgregarPersonaActivity -->
         <activity
             android:name=".activities.AgregarPersonaActivity"
             android:exported="false"

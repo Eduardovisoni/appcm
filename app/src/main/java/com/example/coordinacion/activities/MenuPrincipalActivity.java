@@ -81,11 +81,9 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         StringBuilder html = new StringBuilder();
         html.append("<html><head><meta charset=\"UTF-8\"><style>");
         
-        // ESTILOS CSS ACTUALIZADOS PARA CENTRAR
         html.append("body { font-family: Arial, sans-serif; }");
-        html.append("h1 { text-align: center; margin-bottom: 20px; }"); // Título centrado
+        html.append("h1 { text-align: center; margin-bottom: 20px; }");
         html.append("table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }");
-        // text-align: center en th y td para centrar el contenido de la tabla
         html.append("th, td { border: 1px solid #000; padding: 8px; text-align: center; vertical-align: middle; }"); 
         html.append(".category-header { background-color: #4A5C6A; color: white; text-align: center; font-size: 18px; font-weight: bold; }");
         html.append(".column-header { background-color: #f2f2f2; font-weight: bold; }");
@@ -103,22 +101,27 @@ public class MenuPrincipalActivity extends AppCompatActivity {
                 }
             }
             if (!personasCategoria.isEmpty()) {
-                // Aumentamos el colspan a 7 porque agregamos la columna de Notas
-                html.append("<table><tr><td colspan='7' class='category-header'>").append(categoria).append("</td></tr>");
-                
-                // Agregamos el encabezado de Notas
-                html.append("<tr class='column-header'><th>Nombre</th><th>Edad</th><th>Organización</th><th>Asistencias</th><th>Tiempo Ens.</th><th>Dirección</th><th>Notas</th></tr>");
+                html.append("<table><tr><td colspan='8' class='category-header'>").append(categoria).append("</td></tr>");
+                html.append("<tr class='column-header'><th>Nombre</th><th>Edad</th><th>Género</th><th>Organización</th><th>Asistencias</th><th>Tiempo Ens.</th><th>Dirección</th><th>Notas</th></tr>");
                 
                 for (Persona p : personasCategoria) {
-                    String notaTexto = (p.notas != null) ? p.notas : ""; // Manejo de nulos
+                    String edadTexto = (p.edad == 0) ? "-" : String.valueOf(p.edad);
+                    String generoTexto = (p.genero != null && !p.genero.isEmpty()) ? p.genero : "-";
+                    String orgTexto = (p.organizacion != null && !p.organizacion.isEmpty() && !p.organizacion.equals("Ninguna")) ? p.organizacion : "-";
+                    String asistenciasTexto = (p.asistencias == 11) ? "+10" : String.valueOf(p.asistencias);
+                    String tiempoTexto = (p.tiempoEnsenando == 0) ? "-" : p.tiempoEnsenando + " sem.";
+                    String dirTexto = (p.direccion != null && !p.direccion.isEmpty()) ? p.direccion : "-";
+                    String notaTexto = (p.notas != null && !p.notas.isEmpty()) ? p.notas : "-";
+
                     html.append("<tr>")
                         .append("<td>").append(p.nombre).append("</td>")
-                        .append("<td>").append(p.edad).append("</td>")
-                        .append("<td>").append(p.organizacion).append("</td>")
-                        .append("<td>").append(p.asistencias).append("</td>")
-                        .append("<td>").append(p.tiempoEnsenando).append("</td>")
-                        .append("<td>").append(p.direccion).append("</td>")
-                        .append("<td>").append(notaTexto).append("</td>") // Agregamos el dato de la nota
+                        .append("<td>").append(edadTexto).append("</td>")
+                        .append("<td>").append(generoTexto).append("</td>")
+                        .append("<td>").append(orgTexto).append("</td>")
+                        .append("<td>").append(asistenciasTexto).append("</td>")
+                        .append("<td>").append(tiempoTexto).append("</td>")
+                        .append("<td>").append(dirTexto).append("</td>")
+                        .append("<td>").append(notaTexto).append("</td>")
                         .append("</tr>");
                 }
                 html.append("</table><br>");
@@ -127,7 +130,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         html.append("</body></html>");
 
         try {
-            // 1. Guardar el archivo en el directorio de caché de la app
             File cachePath = new File(getCacheDir(), "files");
             cachePath.mkdirs(); 
             File file = new File(cachePath, "Reporte_" + grupoSeleccionado + ".html");
@@ -135,19 +137,15 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             stream.write(html.toString().getBytes());
             stream.close();
 
-            // 2. Obtener la URI segura usando el FileProvider
             Uri contentUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
 
             if (contentUri != null) {
-                // 3. Crear el Intent para compartir
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); 
                 shareIntent.setDataAndType(contentUri, getContentResolver().getType(contentUri));
                 shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Reporte de " + grupoSeleccionado);
-
-                // 4. Lanzar el menú de compartir
                 startActivity(Intent.createChooser(shareIntent, "Compartir reporte vía..."));
             }
 

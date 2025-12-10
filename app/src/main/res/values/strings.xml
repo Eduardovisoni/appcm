@@ -24,6 +24,9 @@
     <string name="agregar_persona_activity_title">Agregar Nueva Persona</string>
     <string name="hint_name">Nombre completo</string>
     <string name="hint_age">Edad</string>
+    <string name="label_gender">Género</string>
+    <string name="gender_male">Hombre</string>
+    <string name="gender_female">Mujer</string>
     <string name="hint_organization">Organización</string>
     <string name="hint_attendance">Asistencias</string>
     <string name="hint_teaching_time">Tiempo enseñando (Semanas)</string>

@@ -7,8 +7,8 @@ import com.example.coordinacion.database.PersonaDao;
 import android.content.Context;
 import androidx.room.Room;
 
-// Incrementar la versión de la base de datos a 2
-@Database(entities = {Persona.class}, version = 2)
+// Versión 3: Se agregó el campo 'genero' a Persona
+@Database(entities = {Persona.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PersonaDao personaDao();
 
@@ -21,7 +21,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "coordinacion_database")
                             .allowMainThreadQueries() // Permitir consultas en hilo principal por simplicidad
-                            .fallbackToDestructiveMigration() // Añadido para manejar actualizaciones de versión
+                            .fallbackToDestructiveMigration() // Manejar cambios de versión borrando la BD
                             .build();
                 }
             }
