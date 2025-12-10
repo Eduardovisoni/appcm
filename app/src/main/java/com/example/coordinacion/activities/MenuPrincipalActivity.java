@@ -1,9 +1,16 @@
 package com.example.coordinacion.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.util.Log;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +31,8 @@ public class MenuPrincipalActivity extends AppCompatActivity {
 
     private String grupoSeleccionado;
     private PersonaDao personaDao;
+    // Variable para guardar el WebView y evitar que el recolector de basura lo elimine antes de imprimir
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +50,6 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             return;
         }
 
-        // ... (resto de los listeners de botones)
         Button btnAddPerson = findViewById(R.id.btnAddPerson);
         Button btnViewPeople = findViewById(R.id.btnViewPeople);
         Button btnDeleteRecords = findViewById(R.id.btnDeleteRecords);
@@ -66,16 +74,17 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         });
 
         btnExportCsv.setOnClickListener(v -> {
-            exportarYCompartirReporteHTML();
+            // Acción directa: Generar PDF
+            imprimirHTMLComoPDF();
         });
     }
 
-    private void exportarYCompartirReporteHTML() {
+    // Método auxiliar para generar el contenido HTML (reutilizable)
+    private String generarContenidoHTML() {
         List<Persona> todasLasPersonas = personaDao.getPersonasPorGrupo(grupoSeleccionado);
 
         if (todasLasPersonas.isEmpty()) {
-            Toast.makeText(this, "No hay datos para exportar en este grupo.", Toast.LENGTH_SHORT).show();
-            return;
+            return null;
         }
 
         StringBuilder html = new StringBuilder();
@@ -128,13 +137,25 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             }
         }
         html.append("</body></html>");
+        
+        return html.toString();
+    }
+
+    // Este método se mantiene por si en el futuro se quiere volver a usar la exportación HTML directa,
+    // pero ya no está conectado al botón.
+    private void exportarYCompartirReporteHTML() {
+        String htmlContent = generarContenidoHTML();
+        if (htmlContent == null) {
+            Toast.makeText(this, "No hay datos para exportar en este grupo.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         try {
             File cachePath = new File(getCacheDir(), "files");
             cachePath.mkdirs(); 
             File file = new File(cachePath, "Reporte_" + grupoSeleccionado + ".html");
             FileOutputStream stream = new FileOutputStream(file);
-            stream.write(html.toString().getBytes());
+            stream.write(htmlContent.getBytes());
             stream.close();
 
             Uri contentUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
@@ -153,5 +174,35 @@ public class MenuPrincipalActivity extends AppCompatActivity {
             Log.e("ShareHTML", "Error al crear o compartir el archivo HTML", e);
             Toast.makeText(this, "Error al compartir el archivo.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void imprimirHTMLComoPDF() {
+        String htmlContent = generarContenidoHTML();
+        if (htmlContent == null) {
+            Toast.makeText(this, "No hay datos para exportar en este grupo.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Crear un WebView para renderizar el HTML
+        mWebView = new WebView(this);
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                crearTrabajoImpresion(view);
+                mWebView = null; // Liberar referencia
+            }
+        });
+
+        // Cargar el contenido HTML
+        mWebView.loadDataWithBaseURL(null, htmlContent, "text/HTML", "UTF-8", null);
+    }
+
+    private void crearTrabajoImpresion(WebView webView) {
+        PrintManager printManager = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+        PrintDocumentAdapter printAdapter = webView.createPrintDocumentAdapter("Reporte_" + grupoSeleccionado);
+        String jobName = getString(R.string.app_name) + " Documento";
+        
+        // Iniciar el trabajo de impresión (esto abrirá la UI del sistema para guardar como PDF)
+        printManager.print(jobName, printAdapter, new PrintAttributes.Builder().build());
     }
 }

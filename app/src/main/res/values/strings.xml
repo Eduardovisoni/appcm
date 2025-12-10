@@ -8,10 +8,11 @@
 
     <!-- MenuPrincipalActivity -->
     <string name="menu_principal_activity_title">Menú Principal</string>
+    <string name="title_select_option">Elige una opción</string>
     <string name="button_add_person">Agregar persona</string>
     <string name="button_saved_people">Personas guardadas</string>
     <string name="button_delete_records">Eliminar registros</string>
-    <string name="button_export_csv">Exportar CSV</string>
+    <string name="button_export_csv">Exportar PDF</string>
 
     <!-- SeleccionarCategoriaActivity -->
     <string name="seleccionar_categoria_activity_title">Seleccionar Categoría</string>
@@ -42,7 +43,7 @@
 
     <!-- EliminarRegistrosActivity -->
     <string name="eliminar_registros_activity_title">Eliminar Registros</string>
-    <string name="delete_warning_message">¡Advertencia! Esta acción es irreversible. Debe hacer un backup (Exportar CSV) antes de continuar.</string>
+    <string name="delete_warning_message">¡Advertencia! Esta acción es irreversible. Debe hacer un backup (Exportar PDF) antes de continuar.</string>
     <string name="button_confirm_delete">Eliminar registros de este grupo</string>
     <string name="records_deleted_successfully">Registros eliminados exitosamente.</string>
 
