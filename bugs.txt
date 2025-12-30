@@ -1,0 +1,4 @@
+Errores pendientes:
+
+- Se actualizo el apartado de notas, las muestra en el HTML, en la DB pero en "Personas Guardadas no aparece en ese espacio"
+- Quiero cambiar la funcionalidad de "Eliminar registros" a pasarlo individual y que exista un icono para eliminar

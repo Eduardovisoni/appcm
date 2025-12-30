@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollViewRaiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/background_app"
+    tools:context=".activities.AgregarPersonaActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/agregar_persona_activity_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_secondary"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Nombre -->
+        <EditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_name"
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="textPersonName|textCapWords"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Edad -->
+        <EditText
+            android:id="@+id/etEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_age"
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="number"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Género -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_gender"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"/>
+        <RadioGroup
+            android:id="@+id/rgGenero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_input"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp">
+            <RadioButton
+                android:id="@+id/rbHombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/gender_male"
+                android:textColor="@color/button_color"
+                android:buttonTint="@color/button_color"/>
+            <RadioButton
+                android:id="@+id/rbMujer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/gender_female"
+                android:textColor="@color/button_color"
+                android:buttonTint="@color/button_color"/>
+        </RadioGroup>
+
+        <!-- Organización -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_organization"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"/>
+        <Spinner
+            android:id="@+id/spOrganizacion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Asistencias -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_attendance"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"/>
+        <Spinner
+            android:id="@+id/spAsistencias"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Tiempo Enseñando (AHORA ES SPINNER) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_teaching_time"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"/>
+        <Spinner
+            android:id="@+id/spTiempoEnsenando"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_input"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Dirección -->
+        <EditText
+            android:id="@+id/etDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_address"
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="textPostalAddress"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Notas -->
+        <EditText
+            android:id="@+id/etNotas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:hint="@string/hint_notes"
+            android:textColor="@color/button_color"
+            android:textColorHint="@color/text_hint"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top|start"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Botón Guardar -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGuardarPersona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/button_text_color"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:padding="16dp"
+            android:text="@string/button_save_person" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@color/background_app"
+    tools:context=".activities.MenuPrincipalActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_select_option"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_secondary"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddPerson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_add_person"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewPeople"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_saved_people"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnExportCsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_export_csv"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="16dp"/>
+
+</LinearLayout>

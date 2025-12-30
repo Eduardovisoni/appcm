@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Nueva Paleta: Soft Blue & Lavender -->
+    <color name="background_app">#F3F4F9</color> <!-- Fondo general claro -->
+    <color name="primary_light">#DDE6F5</color>  <!-- Azul claro pastel -->
+    <color name="secondary_light">#D8D2F2</color> <!-- Lavanda suave -->
+    <color name="accent_blue">#5C79A9</color>    <!-- Azul medio (para botones principales) -->
+    
+    <!-- Elementos de UI -->
+    <color name="input_background">#FFFFFF</color> <!-- Fondos de input blancos para contraste -->
+    <color name="text_main">#2F3E5A</color>        <!-- Azul muy oscuro para texto principal -->
+    <color name="text_secondary">#5C79A9</color>  <!-- Azul medio para subtítulos -->
+    <color name="text_hint">#A0A8C0</color>       <!-- Gris azulado para hints -->
+    
+    <color name="button_color">#5C79A9</color>    <!-- Color principal de botones -->
+    <color name="button_text_color">#FFFFFF</color> <!-- Texto blanco sobre botones oscuros -->
+</resources>

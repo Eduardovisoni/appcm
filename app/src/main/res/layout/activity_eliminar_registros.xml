@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@color/background_app"
+    tools:context=".activities.EliminarRegistrosActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_warning_message"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_light"
+        android:textStyle="bold"
+        android:lineSpacingExtra="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConfirmDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_button"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="@string/button_confirm_delete"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:padding="16dp"/>
+
+</LinearLayout>

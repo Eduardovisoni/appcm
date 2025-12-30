@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Coordinación Misional</string>
+
+    <!-- MainActivity -->
+    <string name="main_activity_title">Coordinación Misional Jutiapa</string>
+    <string name="button_elders">Elderes</string>
+    <string name="button_sisters">Hermanas</string>
+
+    <!-- MenuPrincipalActivity -->
+    <string name="menu_principal_activity_title">Menú Principal</string>
+    <string name="title_select_option">Elige una opción</string>
+    <string name="button_add_person">Agregar persona</string>
+    <string name="button_saved_people">Personas guardadas</string>
+    <string name="button_delete_records">Eliminar registros</string>
+    <string name="button_export_csv">Exportar PDF</string>
+
+    <!-- SeleccionarCategoriaActivity -->
+    <string name="seleccionar_categoria_activity_title">Seleccionar Categoría</string>
+    <string name="category_friend">Amigo de la iglesia</string>
+    <string name="category_new_convert">Recién converso</string>
+    <string name="category_inactive_member">Miembro inactivo</string>
+    <string name="category_member">Miembro</string>
+
+    <!-- AgregarPersonaActivity -->
+    <string name="agregar_persona_activity_title">Agregar Nueva Persona</string>
+    <string name="hint_name">Nombre completo</string>
+    <string name="hint_age">Edad</string>
+    <string name="label_gender">Género</string>
+    <string name="gender_male">Hombre</string>
+    <string name="gender_female">Mujer</string>
+    <string name="hint_organization">Organización</string>
+    <string name="hint_attendance">Asistencias</string>
+    <string name="hint_teaching_time">Tiempo enseñando (Semanas)</string>
+    <string name="hint_address">Dirección</string>
+    <string name="hint_notes">Notas adicionales</string>
+    <string name="button_save_person">Guardar Persona</string>
+    <string name="error_empty_field">Este campo no puede estar vacío</string>
+    <string name="error_person_exists">Ya existe una persona con este nombre en el grupo seleccionado.</string>
+    <string name="person_saved_successfully">Persona guardada exitosamente.</string>
+
+    <!-- ListaPersonasActivity -->
+    <string name="lista_personas_activity_title">Personas Guardadas</string>
+
+    <!-- EliminarRegistrosActivity -->
+    <string name="eliminar_registros_activity_title">Eliminar Registros</string>
+    <string name="delete_warning_message">¡Advertencia! Esta acción es irreversible. Debe hacer un backup (Exportar PDF) antes de continuar.</string>
+    <string name="button_confirm_delete">Eliminar registros de este grupo</string>
+    <string name="records_deleted_successfully">Registros eliminados exitosamente.</string>
+
+    <!-- Exportar CSV -->
+    <string name="export_success">Reporte exportado exitosamente.</string>
+    <string name="export_failure">Error al exportar el archivo.</string>
+    <string name="permission_denied">Permiso de almacenamiento denegado.</string>
+
+    <!-- General -->
+    <string name="group_elders">Elderes</string>
+    <string name="group_sisters">Hermanas</string>
+    <string name="intent_key_group">grupoSeleccionado</string>
+    <string name="intent_key_category">categoriaSeleccionada</string>
+
+</resources>

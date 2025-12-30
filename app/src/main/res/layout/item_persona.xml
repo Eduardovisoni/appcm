@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_input">
+
+    <LinearLayout
+        android:id="@+id/containerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/containerActions"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvPersonaNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de la Persona"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent_blue" />
+
+        <TextView
+            android:id="@+id/tvPersonaCategoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoría"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:textColor="@color/text_secondary"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvPersonaDetalles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edad: -- | Género: --"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"/>
+
+        <TextView
+            android:id="@+id/tvPersonaOrg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Organización: --"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvPersonaStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asistencias: -- | Tiempo: --"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvPersonaDireccion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dirección: --"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvPersonaNotas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notas: Vacío"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/containerActions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btnEditarPersona"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:tint="@color/accent_blue"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Editar persona" />
+
+        <ImageView
+            android:id="@+id/btnEliminarPersona"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="@color/accent_blue"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Eliminar persona" />
+    </LinearLayout>
+
+</RelativeLayout>

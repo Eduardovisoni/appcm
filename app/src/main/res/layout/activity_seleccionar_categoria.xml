@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@color/background_app"
+    tools:context=".activities.SeleccionarCategoriaActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seleccionar_categoria_activity_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="40dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCatFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/category_friend"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCatNewConvert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/category_new_convert"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCatInactive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/category_inactive_member"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCatMember"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/category_member"
+        android:background="@drawable/bg_button"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:padding="16dp"/>
+
+</LinearLayout>
